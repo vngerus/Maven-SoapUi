@@ -1,0 +1,8 @@
+<mirrors>
+    <mirror>
+        <id>maven-default-http-blocker</id>
+        <mirrorOf>central</mirrorOf>
+        <url>https://repo.maven.apache.org/maven2</url>
+        <layout>default</layout>
+    </mirror>
+</mirrors>
