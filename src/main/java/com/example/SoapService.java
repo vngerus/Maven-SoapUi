@@ -13,7 +13,7 @@ public class SoapService {
     }
 
     public static void main(String[] args) {
-        Endpoint.publish("http://localhost:8080/SoapService", new SoapService());
-        System.out.println("Service is running at http://localhost:8080/SoapService?wsdl");
+        Endpoint.publish("http://localhost:8081/SoapService", new SoapService());
+        System.out.println("Service is running at http://localhost:8081/SoapService?wsdl");
     }
 }
