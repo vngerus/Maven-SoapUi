@@ -3,6 +3,14 @@
 
 Este proyecto demuestra cómo implementar pruebas unitarias de servicios web en un ciclo de integración continua utilizando **SoapUI** y **Jenkins**.
 
+## Índice
+1. [Descripción General](#descripción-general)
+2. [Repositorio del Proyecto](#repositorio-del-proyecto)
+3. [Pipeline de Jenkins](#pipeline-de-jenkins)
+   - [Código del Pipeline](#código-del-pipeline)
+4. [Resultados de la Ejecución](#resultados-de-la-ejecución)
+5. [Notas Adicionales](#notas-adicionales)
+
 ## Descripción General
 
 El objetivo de este proyecto es asegurar la calidad del servicio web antes de su implementación en producción. Para ello, se han configurado pruebas unitarias que se ejecutan automáticamente en cada cambio del código.
@@ -30,19 +38,19 @@ El pipeline de Jenkins está configurado para realizar las siguientes tareas:
 
 El siguiente es el código del pipeline implementado en Jenkins:
 
-\`\`\`groovy
+```groovy
 pipeline {
     agent any
 
-    environment { //Ruta de tus archivos
-        JMETER_HOME = 'D:\Archivos\apache-jmeter-5.6.3\bin' 
+    environment {
+        JMETER_HOME = 'D:\Archivos\apache-jmeter-5.6.3\bin'
         JMETER_TEST = 'D:\Archivos\Respuesta.jmx'
         JMETER_RESULTS = 'D:\Archivos\resultados.jtl'
         JMETER_REPORT_DIR = 'D:\Archivos\jmeter-report'
     }
 
-    stages { //Testeos
-        stage('Run JMeter Tests') { 
+    stages {
+        stage('Run JMeter Tests') {
             steps {
                 bat """
                 ${JMETER_HOME}\jmeter.bat -n -t ${JMETER_TEST} -l ${JMETER_RESULTS} -e -o ${JMETER_REPORT_DIR}
@@ -50,13 +58,13 @@ pipeline {
             }
         }
         
-        stage('Archive Results') { //Resultados 
+        stage('Archive Results') {
             steps {
                 archiveArtifacts artifacts: "${JMETER_REPORT_DIR}/**/*", allowEmptyArchive: true
             }
         }
         
-        stage('Publish Report') { //reportes publicados
+        stage('Publish Report') {
             steps {
                 publishHTML([allowMissing: false,
                              alwaysLinkToLastBuild: true,
@@ -70,7 +78,7 @@ pipeline {
     
     post {
         always {
-            script { //Script para enviar resultados a slack
+            script {
                 try {
                     junit '**/TEST-*.xml'
                 } catch (Exception e) {
@@ -90,7 +98,7 @@ pipeline {
         }
     }
 }
-\`\`\`
+```
 
 ## Resultados de la Ejecución
 
