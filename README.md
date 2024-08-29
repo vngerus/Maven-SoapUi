@@ -1,6 +1,5 @@
 
-# Implementa pruebas unitarias de servicios web al ciclo de integración continua utilizando
-soapUI.
+# Implementa pruebas unitarias de servicios web al ciclo de integración continua utilizando soapUI.
 
 ## Índice
 1. [Introducción](#introducción)
